@@ -1,0 +1,31 @@
+config_name: uvm_regr
+
+
+env:
+  - VCS_HOME
+  - EMAN_HOME
+  - EMAN_PROJECT
+
+variables:
+  - vcs: $VCS_HOME/bin/vcs
+  - cm_opts: -cm line+cond+fsm+tgl+branch+assert
+  - UVM_OPTs: +UVM_TESTNAME=$${EMAN_TEST_NAME} 
+  - ntb_random: +ntb_random_seed=$${EMAN_RANDOM}
+  - debug_op: uvm_Debug +fsdb+region
+  - current_dir: $PWD
+  - run_log: $${EMAN_TEST_NAME}.log
+  - fgp_op: -fgp=num_threads:1,diag:ruse,dynamictoggle
+
+
+builds:
+  - name: elabv1
+    run_cmd: sh ../regr_cfg/comp.sh
+    simv_location: $${EMAN_COMPILE_DIR}/simv
+    run_dir: $current_dir
+
+tests:
+  - name: apbm_reg_rst_test, apbm_reg_access_test, apbm_reg_bit_bash_test
+    build: elabv1
+    arguments: $cm_opts $UVM_OPTs $debug_op $ntb_random -l $run_log
+    tags: direct
+    count: 1

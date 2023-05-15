@@ -1,0 +1,36 @@
+=================================================================================================================
+					Tutorial VCS AMS - Verilog Top Configuration
+=================================================================================================================
+Please go through Tutorial_Verilog_Top.pdf file for detailed instructions on running the tutorial.
+
+The purpose of this tutorial is to:
+
+1. Run an All-Digital (VCS only) Simulation
+	VCS Standalone Run
+	Use: % runVcs
+
+2. Run a Mixed-Signal VCS-AMS Simulation in which a top-level Verilog testbench instantiates a SPICE cell.
+
+In the Verilog-SPICE flow, the simulation can be carried out in either of the following 2 ways:
+
+A. Two step flow
+	i>	Compilation
+	ii>	Simulation
+	
+	Use: % runVcsAms
+
+B. Three step flow
+	i>	Analysis
+	ii>	Elaboration
+	iii>	Simulation
+	
+	Use: % runVcsAms_3step
+Note: Compilation comprises of the steps Analysis & Elaboration
+	
+----------------------------------------------------------------------------------------------------------------
+Results will be available inside the 'results_vcs, results_vcsAms and results_vcsAms_3step' directories.
+Digital Output: results_vcs/vcs.fsdb results_vcsAms/vcs.fsdb results_vcsAms_3step/vcs.fsdb
+Analog Output:	results_vcsAms/xa/xa.fsdb results_vcsAms_3step/xa/xa.fsdb
+================================================================================================================
+
+Note: Use CLEAN to cleanup all files.

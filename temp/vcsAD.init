@@ -1,0 +1,3 @@
+bus_format _%d;
+use_spice -cell addr4;
+choose xa -n addr4.spi -c xa.cfg -o results_vcsAms/xa/xa;

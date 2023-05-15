@@ -1,0 +1,7 @@
+rm -rf results_vcs simvVcs.daidir csrc
+rm -rf results_vcsAms simv.msv simv.daidir
+rm -rf results_vcsAms_3step simv_3step.msv simv_3step.daidir AN.DB
+
+rm simv* 
+rm -rf 64/
+rm novas_dump.log ucli.key gndb.log sxcmd.log

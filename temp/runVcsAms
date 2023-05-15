@@ -1,0 +1,25 @@
+#!/bin/csh -f
+
+echo "clean up old files"
+rm -rf results_vcsAms simv.msv simv.daidir csrc
+
+echo "mkdir ./results_vcsAms"
+mkdir ./results_vcsAms
+
+# Compile
+echo "verilog compilation"
+vcs \
+	-full64 \
+	testbench.v \
+	adder.v	\
+	-debug_access+all \
+	-ad=vcsAD.init \
+	-l ./results_vcsAms/vcs.log \
+	
+# Simulate
+echo "run simulation - simvVcsAms"
+simv \
+	+COMPARE \
+	-l ./results_vcsAms/simv.log
+	
+mv ./vcs.fsdb ./results_vcsAms/

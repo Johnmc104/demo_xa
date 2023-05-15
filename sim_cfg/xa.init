@@ -1,0 +1,8 @@
+bus_format _%d;
+use_spice -cell addr4;
+choose xa -n ../rtl/addr4.spi -c ../sim_cfg/xa.cfg ;
+d2a rise_time=100p fall_time=100p delay=300p hiv=3.3 lov=0 node=tb_top.dut.a*;
+d2a rise_time=100p fall_time=100p delay=300p hiv=3.3 lov=0 node=tb_top.dut.b*;
+d2a rise_time=100p fall_time=100p delay=300p hiv=3.3 lov=0 node=tb_top.dut.cin*;
+a2d loth=0.6v hith=2.7v node=tb_top.dut.s*;
+a2d loth=0.6v hith=2.7v node=tb_top.dut.count;
