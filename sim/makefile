@@ -36,7 +36,10 @@ USER_ELAB =
 USER_SIM  =
 
 ifeq ($(strip $(AMS_EN)),1)
-USER_ELAB += -ad=../sim_cfg/xa.init
+USER_ELAB += -ad=../sim_cfg/cosim_xa.init
+User_Define += +define+ASM_SIM
+else ifeq ($(strip $(AMS_EN)),2)
+USER_ELAB += -ad=../sim_cfg/cosim_finesim.init
 User_Define += +define+ASM_SIM
 endif
 
@@ -119,6 +122,7 @@ VCOMP= vlogan -full64 -override_timescale=${TIMESCALE} \
 
 
 precomp:
+	cp ../sim_cfg/cosim_finesim.cfg ./finesim.cfg
 	${SINGLE_COMP} -l vlogan_single.log
 	$(VCOMP) ${FILE_LIST} -l vlogan.log
 #+nospecify +notimingcheck +libext+.v -l vlogan.log
@@ -232,4 +236,4 @@ clean:
 
 cleanall:clean
 	@echo "Cleaning up ..."
-	@rm -rf simv.vdb verdi* .fsm.sch.verilog.xml
+	@rm -rf simv.vdb verdi* .fsm.sch.verilog.xml simv.msv
