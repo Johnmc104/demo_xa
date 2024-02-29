@@ -1,0 +1,77 @@
+/* Ideal D-A and A-D based on models from:
+ *
+ * http://www.eda.org/verilog-ams/models
+ *
+ */
+
+`define dac_size 4
+`define adc_size 4
+
+`include "constants.h"
+`include "discipline.h"
+
+module ideal_dac(in,out);
+  input [0:`dac_size-1] in;
+  output out;
+  voltage in,out;
+  parameter vth = 2.5;
+  parameter real trise = 0 from [0:inf);
+  parameter real tfall = 0 from [0:inf);
+
+  real code;
+  integer pow2 [0:`dac_size];
+  integer j;
+  genvar i;
+
+  analog begin
+
+    @(initial_step) begin
+      for (j=0;j<=`dac_size;j=j+1) 
+        pow2[j] = pow(2,j);
+    end
+
+    code = 0;
+    for (i=0;i<`dac_size;i=i+1) 
+      code = code + ((V(in[i]) > vth) ? pow2[i] : 0);
+
+    V(out) <+ transition(code/pow2[`dac_size],0,trise,tfall);
+
+  end
+endmodule
+
+
+module ideal_adc(in,clk,out);
+  input in,clk;
+  output [0:`adc_size-1] out;
+  voltage in,clk,out;
+
+  parameter real fullscale = 1.0;
+  parameter real delay_ = 0, trise = 10n, tfall = 10n;
+  parameter real clk_vth = 2.5;
+  parameter real out_high = 1, out_low = 0 from (-inf:out_high);
+
+  real sample,thresh;
+  real result[0:`adc_size-1];
+  genvar i;
+
+  analog begin
+    @(cross(V(clk)-clk_vth, +1)) begin
+      sample = V(in);
+      thresh = fullscale/2;
+      for(i=`adc_size-1;i>=0;i=i-1) begin
+        if (sample > thresh) begin
+          result[i] = out_high;
+          sample = sample - thresh;
+        end
+        else 
+          result[i] = out_low;
+        sample = 2*sample;
+      end
+    end
+
+    for(i=`adc_size-1;i>=0;i=i-1)
+      V(out[i]) <+ transition(result[i],delay_,trise,tfall);
+
+  end
+endmodule
+

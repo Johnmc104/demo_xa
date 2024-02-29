@@ -41,6 +41,9 @@ User_Define += +define+ASM_SIM
 else ifeq ($(strip $(AMS_EN)),2)
 USER_ELAB += -ad=../sim_cfg/cosim_finesim.init
 User_Define += +define+ASM_SIM
+else ifeq ($(strip $(AMS_EN)),3)
+USER_ELAB += -ad=../sim_cfg/co_sim_xa_veriloga.init
+User_Define += +define+ASM_SIM
 endif
 
 ifeq ($(strip $(XPROP_EN)),1)
@@ -109,6 +112,9 @@ FILE_LIST	= -f ../sim_cfg/filelist +nospecify
 SINGLE_COMP =
 endif
 
+ifeq ($(strip $(AMS_EN)),3)
+FILE_LIST	= -f ../sim_cfg/filelist_va +nospecify
+endif 
 
 
 all: clean precomp elab sim
