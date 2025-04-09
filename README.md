@@ -14,7 +14,7 @@ edit finesim.init at sim_cfg, use `choose finesim -spectre xxxx`
 
 
 ## other
-a2d signal type must be wire type
+a2d signal type must be wire type, or set `port_dir`
 
 ### dir
 ```
