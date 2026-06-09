@@ -20,3 +20,10 @@ a2d signal type must be wire type, or set `port_dir` with logic type
 ```
 port_dir -cell xxx (output xxx);
 ```
+
+### set temp
+
+At the end of the netlist file
+```
+simulatorOptions options temp=25
+```
